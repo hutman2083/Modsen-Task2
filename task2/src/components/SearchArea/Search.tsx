@@ -1,12 +1,13 @@
+import { ChangeEventHandler } from "react";
 import "./style.css"
 
-const Search = () => {  
+const Search = (props: { handleSearch: ChangeEventHandler<HTMLInputElement> | undefined; }) => {  
     return (
     <div className="search-area">
         <form action="">
-            <input type="text" />
+            <input onChange={props.handleSearch} type="text" />
             <button type="submit">Search</button>
-        </form>
+            </form>
         
         
     </div>
