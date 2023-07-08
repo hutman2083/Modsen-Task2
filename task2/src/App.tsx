@@ -1,6 +1,6 @@
 import Header from './components/Header/Header';
 import './App.css';
-import Books from './components/Bookslogic/Books';
+import Books from './components/Books/Bookslogic';
 
 function App() {
   return (
