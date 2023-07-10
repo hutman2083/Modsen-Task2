@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "../SearchArea/Search";
 import request from "superagent";
+import BooksList from "./BooksList";
 
 interface IState {
     books: any[];
@@ -25,7 +26,7 @@ class Books extends React.Component<IProps, IState> {
                 .get("https://www.googleapis.com/books/v1/volumes")
                 .query({ q: this.state.searchField })
                 .then ((data) => {
-                    console.log(data);
+                    this.setState({books: [...data.body.items]})
                 });
         }
     }
@@ -38,6 +39,7 @@ class Books extends React.Component<IProps, IState> {
         return (
             <div>
                 <Search searchBook={this.searchBook} handleSearch={this.handleSearch} />
+                <BooksList books={this.state.books}/>
             </div>
         );
     }
