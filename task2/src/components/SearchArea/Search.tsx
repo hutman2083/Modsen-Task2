@@ -1,14 +1,20 @@
-import React from 'react';
+import { ChangeEventHandler, FormEventHandler } from "react";
+import "./style.css"
 
-const Search = () => {
-    return(
-        <div className='search-area'>
-            <form action=''>
-                <input type="text"/>
-                <button type='submit'>Search</button>
+const Search = (props: {
+    searchBook: FormEventHandler<HTMLFormElement> | undefined; handleSearch: ChangeEventHandler<HTMLInputElement> | undefined; 
+}) => {  
+    return (
+    <div className="search-area">
+        <form onSubmit={props.searchBook} action="">
+            <input onChange={props.handleSearch} type="text" />
+            <button type="submit">Search</button>
             </form>
-        </div>
+
+
+    </div>
+
     )
 }
 
-export default Search
+export default Search;
