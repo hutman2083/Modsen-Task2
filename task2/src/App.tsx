@@ -1,14 +1,23 @@
-import Header from './components/Header/Header';
-import './App.css';
-import Books from './components/Books/Bookslogic';
+import React, { useState } from "react";
+import Search from "./components/SearchArea/Search";
+import BookList from "./components/Books/BooksList";
+import { searchBooks } from "./components/APIKey/api";
+import Header from "./components/Header/Header";
 
-function App() {
+const App: React.FC = () => {
+  const [books, setBooks] = useState<any[]>([]);
+
+  const handleSearch = (books: any[]) => {
+    setBooks(books);
+  };
+
   return (
-    <div className="App">
+    <div>
       <Header/>
-      <Books/>
+      <Search onSearch={handleSearch} />
+      <BookList books={books} />
     </div>
   );
-}
+};
 
 export default App;

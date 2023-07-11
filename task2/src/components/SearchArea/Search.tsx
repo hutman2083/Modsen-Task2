@@ -1,20 +1,36 @@
-import { ChangeEventHandler, FormEventHandler } from "react";
-import "./style.css"
+import React, { useState } from "react";
+import axios from "axios";
+import { searchBooks } from "../APIKey/api";
 
-const Search = (props: {
-    searchBook: FormEventHandler<HTMLFormElement> | undefined; handleSearch: ChangeEventHandler<HTMLInputElement> | undefined; 
-}) => {  
-    return (
-    <div className="search-area">
-        <form onSubmit={props.searchBook} action="">
-            <input onChange={props.handleSearch} type="text" />
-            <button type="submit">Search</button>
-            </form>
-
-
-    </div>
-
-    )
+interface SearchProps {
+  onSearch: (books: any[]) => void;
 }
+
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
+  const [query, setQuery] = useState("");
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    searchBooks(query)
+      .then((books) => {
+        console.log(books)
+        onSearch(books);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  return (
+    <form onSubmit={handleSearch}>
+      <input
+        type="text"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
+      <button type="submit">Search</button>
+    </form>
+  );
+};
 
 export default Search;

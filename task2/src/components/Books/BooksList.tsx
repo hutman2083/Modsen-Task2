@@ -1,26 +1,22 @@
 import React from "react";
-import BookCard from "./BookCard";
 
-interface IProps {
-    books: any;
+interface BookListProps {
+  books: any[];
 }
 
-const BooksList = (props: IProps) => {
-    return (
-        <div className="list">
-            {
-                props.books.map((book: any, i: number) => {
-                    return <BookCard
-                        key={i}
-                        image={book.volume.imageLinks.thumbnail}
-                        title={book.volume.title}
-                        author={book.volume.authors}
-                        published={book.volume.publishedDate}
-                    />
-                })
-            }
-        </div>
-    );
-}
+const BookList: React.FC<BookListProps> = ({ books }) => {
+  return (
+    <ul>
+      {books.map((book) => (
+        <li key={book.id}>
+          {book.image && <img src={book.image} alt={book.title} />}
+          <h2>{book.title}</h2>
+          <p>{book.description}</p>
+          <p>{book.categories}</p>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-export default BooksList;
+export default BookList;
