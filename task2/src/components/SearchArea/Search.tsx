@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { searchBooks } from "../APIKey/api";
 
 interface SearchProps {

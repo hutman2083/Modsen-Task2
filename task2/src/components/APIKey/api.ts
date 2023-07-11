@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const API_KEY = "AIzaSyCwZ4UAnXD_O0EM8U18GYk8M1hfKI8cy8Y";
+const results = 'maxResults=30';
 
 export const searchBooks = (query: string): Promise<any[]> => {
   return axios
-    .get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`)
+    .get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}&${results}`)
     .then((response) => {
         const books = response.data.items.map((item: any) => ({
             id: item.id,

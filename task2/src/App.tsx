@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Search from "./components/SearchArea/Search";
 import BookList from "./components/Books/BooksList";
-import { searchBooks } from "./components/APIKey/api";
 import Header from "./components/Header/Header";
 
 const App: React.FC = () => {
