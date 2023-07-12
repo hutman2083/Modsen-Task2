@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { searchBooks } from "../APIKey/api";
+import "./style.css"
 
 interface SearchProps {
-  onSearch: (books: any[]) => void;
+  onSearch: (books: any[], count:number) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [query, setQuery] = useState("");
+  const [count, setCount] =useState(0);
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     searchBooks(query)
       .then((books) => {
         console.log(books)
-        onSearch(books);
+        setCount(books.length)
+        onSearch(books,books.length);
       })
       .catch((error) => {
         console.error(error);
@@ -23,11 +26,13 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
   return (
     <form onSubmit={handleSearch}>
       <input
+        placeholder="Write the name of the book"
         type="text"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />
-      <button type="submit">Search</button>
+      <button type="submit"></button>
+      <p>Количество книг в списке:{count}</p>
     </form>
   );
 };
