@@ -13,7 +13,7 @@ class Books extends React.Component{
     render() {
         return(
             <div className="books">
-                <Search onSearch={function (books: any[]): void {
+                <Search onSearch={function (): void {
                     throw new Error("Function not implemented.");
                 } }/>
             </div>

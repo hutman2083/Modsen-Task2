@@ -1,4 +1,6 @@
 import React from "react";
+import BookCard from "./BookCard";
+import "./styleBook.css"
 
 interface BookListProps {
   books: any[];
@@ -6,16 +8,13 @@ interface BookListProps {
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
   return (
-    <ul>
+    <div className="FlexBox">
       {books.map((book) => (
-        <li key={book.id}>
-          {book.image && <img src={book.image} alt={book.title} />}
-          <h2>{book.title}</h2>
-          <p>{book.description}</p>
-          <p>{book.categories}</p>
-        </li>
+        <div key={book.id} className="book-card">
+          <BookCard book={book} />
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

@@ -1,0 +1,43 @@
+.FlexBox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.book-card {
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+}
+
+.card-img-top{
+  width: 130px;
+  height: 190px;
+}
+
+.loading-indicator-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-indicator img {
+  width: 150px;
+  height: 150px;
+  animation: loading 0.7s infinite linear;
+  transform: rotateY(360deg);
+}
+
+@keyframes loading {
+  to {
+    transform: rotateX(0deg);
+  }
+}
+

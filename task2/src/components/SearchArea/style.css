@@ -4,7 +4,7 @@ form {
     margin-right: 30px;
   }
   input {
-    width: 250px;
+    width: 300px;
     height: 42px;
     padding-left: 15px;
     border-radius: 42px;
@@ -12,11 +12,9 @@ form {
     background: #a7a5a1;
     outline: none;
     position: relative;
-    transition: .3s linear;
+    
   }
-  input:focus {
-    width: 300px;
-  }
+  
   button {
     width: 42px;
     height: 42px;
