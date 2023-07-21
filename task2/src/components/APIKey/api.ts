@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_KEY = "AIzaSyCwZ4UAnXD_O0EM8U18GYk8M1hfKI8cy8Y";
-const results = 'maxResults=30';
+const results = 'maxResults=40';
 
 export const searchBooks = (query: string): Promise<any[]> => {
   return axios
