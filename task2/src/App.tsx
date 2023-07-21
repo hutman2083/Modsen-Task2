@@ -17,7 +17,10 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<div><Search onSearch={handleSearch} /><BookList books={books} /></div>} />
+          <Route path="/" element={<div>
+            <Search onSearch={handleSearch} />
+            <BookList books={books} />
+            </div>} />
           <Route path="/book/:id" element={<BookDetail books={books} />} />
         </Routes>
       </BrowserRouter>

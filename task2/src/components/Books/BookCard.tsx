@@ -8,8 +8,12 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
+  const linkStyle = {
+    textDecoration: "none",
+    color: "inherit",
+  };
   return (
-    <Link to={`/book/${book.id}`}>
+    <Link to={`/book/${book.id}`} style={linkStyle}>
       <Card>
         {book.image ? (
           <Card.Img variant="top" src={book.image} alt={book.title} />
