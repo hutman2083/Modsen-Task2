@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { searchBooks } from "../APIKey/api";
 import "./style.css";
 import BookLoader from "../Books/LoadingIndicator";
+import CategorySelector from "../Books/CategorySelector";
+import SortDropdown from "../Books/SortDropDown";
 
 interface SearchProps {
-  onSearch: (books: any[], count: number) => void;
+  onSearch: (books: any[], count: number, query: string, category: string) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ onSearch }) => {
@@ -12,22 +14,33 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sort, setSort] = useState(query.trim() !== '' ? 'relevance' : 'newest');
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    searchBooks(query)
-      .then((books) => {
-        setCount(books.length);
-        onSearch(books, books.length);
-        setLoading(false);
-        setError("");
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-        setError("Error searching books. Please try again later.");
-      });
+const handleSortChange = (value: string) => {
+  setSort(value);
+};
+
+const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  if (query.trim() === "") {
+    return;
+  }
+  setLoading(true);
+  try {
+    const books = await searchBooks(query, selectedCategory, sort);
+    setCount(books.length);
+    onSearch(books, books.length, query, selectedCategory);
+    setError("");
+  } catch (error) {
+    console.error(error);
+    setError("Error searching books. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
   };
 
   return (
@@ -39,10 +52,18 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <button type="submit">{loading ? "Loading..." : "Search"}</button>
+        <button disabled={loading} type="submit">
+          Search
+        </button>
       </div>
-      <p>Количество книг в списке: {count}</p>
-      {error && <div className="error">{error}</div>}
+      <CategorySelector
+        categories={["all", "art", "biography", "computers", "history", "medical", "poetry"]}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryChange}
+      />
+      <SortDropdown value={sort} onChange={handleSortChange} />
+      <div className="count-container">{count} results found</div>
+      {error && <div className="error-container">{error}</div>}
       {loading && <BookLoader />}
     </form>
   );
