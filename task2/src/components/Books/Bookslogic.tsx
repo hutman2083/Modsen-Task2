@@ -16,6 +16,8 @@ class Books extends React.Component{
             <div className="books">
                 <Search onSearch={function (): void {
                     throw new Error("Function not implemented.");
+                } } onClear={function (): void {
+                    throw new Error("Function not implemented.");
                 } }/>
             </div>
         )

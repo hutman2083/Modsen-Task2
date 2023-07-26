@@ -3,17 +3,20 @@ import { searchBooks } from "../APIKey/api";
 import "./style.css";
 import BookLoader from "../Books/LoadingIndicator";
 
+
 interface SearchProps {
   onSearch: (books: any[], count: number) => void;
+  onClear: () => void;
 }
 
-const Search: React.FC<SearchProps> = ({ onSearch }) => {
+const Search: React.FC<SearchProps> = ({ onSearch,onClear }) => {
   const [query, setQuery] = useState("");
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [category, setCategory] = useState("all");
   const [orderBy, setOrderBy] = useState("relevance");
+ 
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +42,8 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const handleOrderByChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOrderBy(event.target.value);
   };
+
+ 
 
   return (
     <form onSubmit={handleSearch}>
@@ -83,8 +88,12 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
       <p>Количество книг в списке: {count}</p>
       {error && <div className="error">{error}</div>}
       {loading && <BookLoader />}
+      
     </form>
+    
   );
 };
 
 export default Search;
+
+

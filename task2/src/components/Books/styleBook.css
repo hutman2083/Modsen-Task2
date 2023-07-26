@@ -45,3 +45,8 @@ Link{
   text-decoration: none;
   color:inherit;
 }
+
+.Pagination{
+  width: 200px;
+  height: 200px;
+}
