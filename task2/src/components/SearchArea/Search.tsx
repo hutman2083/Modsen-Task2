@@ -13,11 +13,12 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [category, setCategory] = useState("all");
+  const [orderBy, setOrderBy] = useState("relevance");
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    searchBooks(query, category)
+    searchBooks(query, category, orderBy)
       .then((books) => {
         setCount(books.length);
         onSearch(books, books.length);
@@ -33,6 +34,10 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(event.target.value);
+  };
+
+  const handleOrderByChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOrderBy(event.target.value);
   };
 
   return (
@@ -53,6 +58,26 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
           <option value="medical">Medical</option>
           <option value="poetry">Poetry</option>
         </select>
+        <div className="sort-container">
+          <label>
+            <input
+              type="radio"
+              value="relevance"
+              checked={orderBy === "relevance"}
+              onChange={handleOrderByChange}
+            />
+            Relevance
+          </label>
+         <label>
+            <input
+              type="radio"
+              value="newest"
+              checked={orderBy === "newest"}
+              onChange={handleOrderByChange}
+            />
+            Newest
+          </label>
+        </div>
         <button type="submit">{loading ? "Loading..." : "Search"}</button>
       </div>
       <p>Количество книг в списке: {count}</p>
