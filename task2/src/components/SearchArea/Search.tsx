@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { searchBooks } from "../APIKey/api";
 import "./style.css";
 import BookLoader from "../Books/LoadingIndicator";
-import CategorySelector from "../Books/CategorySelector";
-import SortDropdown from "../Books/SortDropDown";
 
 interface SearchProps {
-  onSearch: (books: any[], count: number, query: string, category: string) => void;
+  onSearch: (books: any[], count: number) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ onSearch }) => {
@@ -14,33 +12,27 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [sort, setSort] = useState(query.trim() !== '' ? 'relevance' : 'newest');
+  const [category, setCategory] = useState("all");
 
-const handleSortChange = (value: string) => {
-  setSort(value);
-};
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    searchBooks(query, category)
+      .then((books) => {
+        setCount(books.length);
+        onSearch(books, books.length);
+        setLoading(false);
+        setError("");
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        setError("Error searching books. Please try again later.");
+      });
+  };
 
-const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  if (query.trim() === "") {
-    return;
-  }
-  setLoading(true);
-  try {
-    const books = await searchBooks(query, selectedCategory, sort);
-    setCount(books.length);
-    onSearch(books, books.length, query, selectedCategory);
-    setError("");
-  } catch (error) {
-    console.error(error);
-    setError("Error searching books. Please try again later.");
-  } finally {
-    setLoading(false);
-  }
-};
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(event.target.value);
   };
 
   return (
@@ -52,18 +44,19 @@ const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <button disabled={loading} type="submit">
-          Search
-        </button>
+        <select value={category} onChange={handleCategoryChange}>
+          <option value="all">All categories</option>
+          <option value="art">Art</option>
+          <option value="biography">Biography</option>
+          <option value="computers">Computers</option>
+          <option value="history">History</option>
+          <option value="medical">Medical</option>
+          <option value="poetry">Poetry</option>
+        </select>
+        <button type="submit">{loading ? "Loading..." : "Search"}</button>
       </div>
-      <CategorySelector
-        categories={["all", "art", "biography", "computers", "history", "medical", "poetry"]}
-        selectedCategory={selectedCategory}
-        onCategoryChange={handleCategoryChange}
-      />
-      <SortDropdown value={sort} onChange={handleSortChange} />
-      <div className="count-container">{count} results found</div>
-      {error && <div className="error-container">{error}</div>}
+      <p>Количество книг в списке: {count}</p>
+      {error && <div className="error">{error}</div>}
       {loading && <BookLoader />}
     </form>
   );
