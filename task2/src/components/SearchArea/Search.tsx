@@ -48,13 +48,18 @@ const Search: React.FC<SearchProps> = ({ onSearch,onClear }) => {
   return (
     <form onSubmit={handleSearch}>
       <div className="search-container">
-        <input
-          placeholder="Write the name of the book"
-          type="text"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <select value={category} onChange={handleCategoryChange}>
+          <div className="form">
+          <input
+            placeholder="Write the name of the book"
+            type="text"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : ""}
+          </button>
+        </div>
+        <select className="Category" value={category} onChange={handleCategoryChange}>
           <option value="all">All categories</option>
           <option value="art">Art</option>
           <option value="biography">Biography</option>
@@ -71,24 +76,24 @@ const Search: React.FC<SearchProps> = ({ onSearch,onClear }) => {
               checked={orderBy === "relevance"}
               onChange={handleOrderByChange}
             />
+            <span className="checkmark"></span>
             Relevance
           </label>
-         <label>
+          <label>
             <input
               type="radio"
               value="newest"
               checked={orderBy === "newest"}
               onChange={handleOrderByChange}
             />
+            <span className="checkmark"></span>
             Newest
           </label>
         </div>
-        <button type="submit">{loading ? "Loading..." : "Search"}</button>
       </div>
       <p>Количество книг в списке: {count}</p>
       {error && <div className="error">{error}</div>}
       {loading && <BookLoader />}
-      
     </form>
     
   );

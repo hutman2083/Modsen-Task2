@@ -30,7 +30,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
           <BookCard book={book} />
         </div>
       ))}
-      <button onClick={handleLoadMore}>Load More</button>
+      <button className="Load" onClick={handleLoadMore}>Load More</button>
     </div>
   );
 };

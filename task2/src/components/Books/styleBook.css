@@ -2,12 +2,29 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  
 }
 
 .book-card {
   width: 200px;
   height: 300px;
   margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.Load{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #008CBA;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .card-img-top{
@@ -49,4 +66,33 @@ Link{
 .Pagination{
   width: 200px;
   height: 200px;
+}
+
+.CategorySelector {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: #999;
+}
+
+select:focus {
+  outline: none;
+  border-color: #555;
 }
